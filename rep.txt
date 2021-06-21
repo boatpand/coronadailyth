@@ -1,0 +1,61 @@
+import requests
+
+# Channel access token
+# RfDEGr9qfOkcWQ6zB4kQMdjuq8d7F+4GK1rGS4Ncx5j8uzGoiqPgm6II3WeC07q4mo7oJDyl5BV10KOi4PUVboYQS3VOSAF4CdWqt8Gb91xCdO/ntyiMasuBL1gp2CMKjtxVvxOCWWaWtC3FmBBKNAdB04t89/1O/w1cDnyilFU=
+
+URL = "https://corona.lmao.ninja/v2/countries/THA"
+response = requests.get(URL)
+
+data = response.json()
+print("ผู้ติดเชื้อวันนี้", data["todayCases"], "ราย")
+print("ผู้ติดเชื้อสะสม", data["cases"], "ราย")
+print("เสียชีวิตวันนี้", data["todayDeaths"], "ราย")
+print("เสียชีวิตสะสม", data["deaths"], "ราย")
+print("หายป่วยวันนี้", data["todayRecovered"], "ราย")
+print("หายป่วยสะสม", data["recovered"], "ราย")
+
+ # reply with same input
+    if msgType == "text":
+        msg = str(event["message"]["text"])
+        if msg == "covid":
+            msg1 = "ผู้ติดเชื้อวันนี้ " + str(data["todayCases"]) + " ราย" + "\n"
+            msg2 = "ผู้ติดเชื้อสะสม " + str(data["cases"]) + " ราย" + "\n"
+            msg3 = "ผู้เสียชีวิตวันนี้ " + str(data["todayDeaths"]) + " ราย" + "\n"
+            msg4 = "ผู้เสียชีวิตสะสม " + str(data["deaths"]) + " ราย" + "\n"
+            msg5 = "หายป่วยวันนี้ " + str(data["todayRecovered"]) + " ราย" + "\n"
+            msg6 = "หายป่วยสะสม " + str(data["recovered"]) + " ราย"
+            msg = msg1 + msg2 + msg3 + msg4 + msg5 + msg6
+            # replyObj = TextSendMessage(text=msg)
+            # line_bot_api.reply_message(rtoken, replyObj)
+            line_bot_api.broadcast(TextSendMessage(text='Hello World!'))
+        else:
+            replyObj = TextSendMessage(text=msg)
+            line_bot_api.reply_message(rtoken, replyObj)
+
+    # reply with random sticker
+    else:
+        sk_id = np.random.randint(1,17)
+        replyObj = StickerSendMessage(package_id=str(1),sticker_id=str(sk_id))
+        line_bot_api.reply_message(rtoken, replyObj)
+
+def broadcast():
+    while count <= 0:
+        if hour == '12':
+            print('update')
+            msg0 = "ข้อมูลประจำวันที่ " + str(date) + " เวลา " + str(t) + '\n'
+            msg1 = "ผู้ติดเชื้อวันนี้ " + str(data["todayCases"]) + " ราย" + "\n"
+            msg2 = "ผู้ติดเชื้อสะสม " + str(data["cases"]) + " ราย" + "\n"
+            msg3 = "ผู้เสียชีวิตวันนี้ " + str(data["todayDeaths"]) + " ราย" + "\n"
+            msg4 = "ผู้เสียชีวิตสะสม " + str(data["deaths"]) + " ราย" + "\n"
+            msg5 = "หายป่วยวันนี้ " + str(data["todayRecovered"]) + " ราย" + "\n"
+            msg6 = "หายป่วยสะสม " + str(data["recovered"]) + " ราย"
+            msg = msg0 + msg1 + msg2 + msg3 + msg4 + msg5 + msg6
+            line_bot_api.broadcast(TextSendMessage(text=msg))
+            count = 1
+            time.sleep(3600)
+            count = 0
+        else: 
+            print("wait for update")
+            time.sleep(3600)
+count = 0
+broadcast()
